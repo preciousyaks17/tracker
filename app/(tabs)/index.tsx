@@ -3,9 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet, FlatList, Button } from "react-native";
 import GoalItem from "../../components/GoalItem";
 import GoalInput from "../../components/GoalInput";
+import React from "react";
 export default function App() {
   const [modalIsVisible, setModalIsVisible] = useState(false);
-  const [courseGoals, setCourseGoals] = useState([]);
+  const [courseGoals, setCourseGoals] = useState<
+    { text: string; id: string }[]
+  >([]);
   function startAddGoalHandler() {
     setModalIsVisible(true);
   }
@@ -13,15 +16,15 @@ export default function App() {
     setModalIsVisible(false);
   }
 
-  function addGoalHandler(enteredGoalText) {
+  function addGoalHandler(enteredGoalText: string) {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      { text: enteredGoalText, key: Math.random().toString() },
+      { text: enteredGoalText, id: Math.random().toString() },
     ]);
     endAddGoalHandler();
   }
 
-  function deleteGoalHandler(id) {
+  function deleteGoalHandler(id: string) {
     setCourseGoals((currentCourseGoals) => {
       return currentCourseGoals.filter((goal) => goal.id !== id);
     });
