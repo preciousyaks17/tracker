@@ -7,46 +7,51 @@ import {
   Image,
 } from "react-native";
 import { useState } from "react";
-function GoalInput(props) {
+
+interface GoalInputProps {
+  onAddGoal: (goal: string) => void;
+  onCancel: () => void;
+  visible: boolean;
+}
+
+function GoalInput(props: GoalInputProps) {
   const [enteredGoalText, setEnteredGoalText] = useState("");
-  function goaInputHandler(enteredText) {
+
+  function goalInputHandler(enteredText: string) {
     setEnteredGoalText(enteredText);
   }
 
   function addGoalHandler() {
     props.onAddGoal(enteredGoalText);
     setEnteredGoalText("");
-    return (
-      <Modal visible={props.visible} animationType="slide">
-        <View style={styles.inputContainer}>
-          <Image
-            style={styles.image}
-            source={require("../assets/images/goal.png")}
-          />
+  }
 
-          <TextInput
-            style={styles.textInput}
-            placeholder="Your course goal!"
-            onChangeText={goaInputHandler}
-            value={enteredGoalText}
-          />
-          <View style={styles.buttonContainer}>
-            <View style={styles.button}>
-              <Button title="Cancel" onPress={props.onCancel} color="#f31282" />
-            </View>
-            <View style={styles.button}>
-              <Button
-                title="Add Goal"
-                onPress={addGoalHandler}
-                color="#b180f0"
-              />
-            </View>
+  return (
+    <Modal visible={props.visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/goal.png")}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your course goal!"
+          onChangeText={goalInputHandler}
+          value={enteredGoalText}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="Cancel" onPress={props.onCancel} color="#f31282" />
+          </View>
+          <View style={styles.button}>
+            <Button title="Add Goal" onPress={addGoalHandler} color="#b180f0" />
           </View>
         </View>
-      </Modal>
-    );
-  }
+      </View>
+    </Modal>
+  );
 }
+
 export default GoalInput;
 
 const styles = StyleSheet.create({
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#311b6b,",
+    backgroundColor: "#311b6b",
   },
   image: {
     width: 100,
